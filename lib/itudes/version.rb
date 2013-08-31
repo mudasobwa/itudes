@@ -1,3 +1,5 @@
-module Itudes
-  VERSION = "0.0.1"
+module Geo
+  class Itudes
+    VERSION = "0.0.1"
+  end
 end

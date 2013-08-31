@@ -3,14 +3,14 @@ require 'itudes/version'
 
 Gem::Specification.new do |s|
   s.name = 'itudes'
-  s.version = Itudes::VERSION
+  s.version = Geo::Itudes::VERSION
   s.platform = Gem::Platform::RUBY
   s.date = '2013-08-25'
   s.authors = ['Alexei Matyushkin']
   s.email = 'am@mudasobwa.ru'
   s.homepage = 'http://github.com/mudasobwa/itudes'
   s.summary = %Q{Small utility library to work with [lat,lang]itudes}
-  s.description = %Q{TODO: detailed description of your gem}
+  s.description = %Q{Utility library to simplify dealing with multitudes}
   s.extra_rdoc_files = [
     'LICENSE',
     'README.rdoc',
@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cucumber'
+  s.add_development_dependency 'yard-cucumber'
   s.add_development_dependency 'bueller'
 end
 

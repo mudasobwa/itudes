@@ -2,7 +2,7 @@ require 'bundler/setup'
 
 require 'bueller'
 Bueller::Tasks.new
-Bueller::GemcutterTasks.new
+# Bueller::GemcutterTasks.new
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:examples) do |examples|
@@ -20,4 +20,7 @@ Cucumber::Rake::Task.new(:features)
 task :default => :examples
 
 require 'yard'
-YARD::Rake::YardocTask.new
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb', 'features/**/*.feature', 'features/**/*.rb']
+#   t.options = ['--any', '--extra', '--opts'] # optional
+end

@@ -46,6 +46,11 @@ Feature: itudes library helps to handle everything against [lat,long]itudes
       And the distance equals to 2533 km
       And the distance in miles equals to 1574 mi
 
+   Scenario: distance between two points with lazy Itudes instantiation
+      Given the itudes are instantiated with a string (53°11′18″N,37°5′18″E)
+      When the distance is calculated by implicit “- "58 38 38N,003 04 12W"”
+      Then the calculated distance equals to 2533 km
+
    Scenario: distance between two points thru class method
       Given the itudes are given with a string (53°11′18″N,37°5′18″E)
       And the other itudes are given with a string (58 38 38N,003 04 12W)

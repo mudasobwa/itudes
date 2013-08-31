@@ -76,3 +76,11 @@ Then(/^the rounded value should equal to \((.+)\)$/) do |rounded|
   @itudes.round.should == Geo::Itudes.new(rounded)
   @itudes.round.should == rounded
 end
+
+When(/^the distance is calculated by implicit “\- "(.*?)"”$/) do |other|
+  @calc_dist = @itudes - other
+end
+
+Then(/^the calculated distance equals to (\d+) km$/) do |dist|
+  dist.to_i.should == @calc_dist.to_i
+end

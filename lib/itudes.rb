@@ -30,7 +30,7 @@ end
 module Geo
   # Convenience class to operate w/ multitudes.
   class Itudes
-      attr_reader :latitude, :longitude, :units
+      attr_reader :latitude, :longitude
       # Earth radius in different measurement units (needed to calc distance
       # between two points on the Earth.)
       RADIUS = {
@@ -39,9 +39,9 @@ module Geo
       }
       # Constructs the {Geo::Itudes} instance.
       # If there are two parameters, they may be either strings or floats (or
-      # string and float.) If there is the only param, it may be one of the 
-      # following: 
-      #   - {Itudes} — produces a dup copy of it, 
+      # string and float.) If there is the only param, it may be one of the
+      # following:
+      #   - {Itudes} — produces a dup copy of it,
       #   - {String} — tries to parse string (see String#to_itude)
       #   - {Array} — tries to parse elements
       #
@@ -56,19 +56,8 @@ module Geo
               when Array  then v1.map { |m| Itudes.tudify m }
             end :
             [Itudes.tudify(v1), Itudes.tudify(v2)]).map(&:to_f)
-        kilometers!
       end
-      # Sets the internal measurement to miles (see #distance)
-      def miles!
-        @units = :mi
-        self
-      end
-      # Sets the internal measurement to kilometers (see #distance)
-      def kilometers!
-        @units = :km
-        self
-      end
-      # Compares against another instance. 
+      # Compares against another instance.
       # @return [Boolean] _true_ if other value represents the same
       #   multitudes values, _false_ otherwise
       def == other
@@ -76,7 +65,7 @@ module Geo
         (@latitude == other.latitude) && (@longitude == other.longitude)
       end
       # String representation of multitudes.
-      # @return [String] in the form "53.121231231, -18.43534656"
+      # @return [String] in the form "53.121231231,-18.43534656"
       def to_s
         "#{@latitude},#{@longitude}"
       end
@@ -94,7 +83,7 @@ module Geo
         Itudes.new @latitude - @latitude.modulo(slice), @longitude - @longitude.modulo(slice)
       end
       # Checks if the multitudes behind represent the correct place on the Earth.
-      # @return [Boolean] _true_ if the multitudes are OK 
+      # @return [Boolean] _true_ if the multitudes are OK
       def valid?
         !@latitude.nil? && !@longitude.nil? && !(@latitude.zero? && @longitude.zero?) && \
             @latitude > -90 && @latitude < 90 && @longitude > -90 && @longitude < 90
@@ -102,7 +91,7 @@ module Geo
       # Calculates distance between two points on the Earth.
       # @param other the place on the Earth to calculate distance to
       # @return [Float] the distance between two places on the Earth
-      def distance other
+      def distance other, units = :km
         o = Itudes.new other
         raise ArgumentError.new "operand must be lat-/longitudable" if (o.latitude.nil? || o.longitude.nil?)
 
@@ -112,7 +101,7 @@ module Geo
         lat2 = Itudes.radians(o.latitude);
 
         a = Math::sin(dlat/2)**2 + Math::sin(dlon/2)**2 * Math::cos(lat1) * Math::cos(lat2)
-        (RADIUS[@units] * 2.0 * Math::atan2(Math.sqrt(a), Math.sqrt(1-a))).abs
+        (RADIUS[units] * 2.0 * Math::atan2(Math.sqrt(a), Math.sqrt(1-a))).abs
       end
       alias :- :distance
 

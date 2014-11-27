@@ -48,16 +48,15 @@ Then(/^the value is not considered to be valid$/) do
 end
 
 When(/^the other itudes are instantiated with an array \((\d+ \d+ \d+N),(\d+ \d+ \d+W)\)$/) do |lat, lon|
-  @itudes_other_km = Geo::Itudes.new lat, lon
-  @itudes_other_mi = Geo::Itudes.new(lat, lon).miles!
+  @itudes_other = Geo::Itudes.new lat, lon
 end
 
 Then(/^the distance equals to (\d+) km$/) do |dist_km|
-  expect((@itudes_other_km - @itudes).to_i).to eq(dist_km.to_i)
+  expect((@itudes_other - @itudes).to_i).to eq(dist_km.to_i)
 end
 
 Then(/^the distance in miles equals to (\d+) mi$/) do |dist_mi|
-  expect((@itudes_other_mi - @itudes).to_i).to eq(dist_mi.to_i)
+  expect((@itudes_other.distance(@itudes, :mi)).to_i).to eq(dist_mi.to_i)
 end
 
 Given(/^the itudes are given with a string \((.+)\)$/) do |i1|

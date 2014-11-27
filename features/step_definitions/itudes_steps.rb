@@ -32,19 +32,19 @@ When(/^I call `to_a` method$/) do
 end
 
 Then(/^the proper string is to be created$/) do
-  @itudes_to_s.should == "#{@lat.to_itude},#{@lon.to_itude}"
+  expect(@itudes_to_s).to eq("#{@lat.to_itude},#{@lon.to_itude}")
 end
 
 Then(/^the proper array is to be created$/) do
-  @itudes_to_a.should == [@lat.to_itude.to_f, @lon.to_itude.to_f]
+  expect(@itudes_to_a).to eq([@lat.to_itude.to_f, @lon.to_itude.to_f])
 end
 
 Then(/^the value is considered to be valid$/) do
-  @itudes.valid?.should == true
+  expect(@itudes.valid?).to eq(true)
 end
 
 Then(/^the value is not considered to be valid$/) do
-  @itudes.valid?.should == false
+  expect(@itudes.valid?).to eq(false)
 end
 
 When(/^the other itudes are instantiated with an array \((\d+ \d+ \d+N),(\d+ \d+ \d+W)\)$/) do |lat, lon|
@@ -53,11 +53,11 @@ When(/^the other itudes are instantiated with an array \((\d+ \d+ \d+N),(\d+ \d+
 end
 
 Then(/^the distance equals to (\d+) km$/) do |dist_km|
-  (@itudes_other_km - @itudes).to_i.should == dist_km.to_i
+  expect((@itudes_other_km - @itudes).to_i).to eq(dist_km.to_i)
 end
 
 Then(/^the distance in miles equals to (\d+) mi$/) do |dist_mi|
-  (@itudes_other_mi - @itudes).to_i.should == dist_mi.to_i
+  expect((@itudes_other_mi - @itudes).to_i).to eq(dist_mi.to_i)
 end
 
 Given(/^the itudes are given with a string \((.+)\)$/) do |i1|
@@ -69,12 +69,12 @@ Given(/^the other itudes are given with a string \((.+)\)$/) do |i2|
 end
 
 Then(/^the classs method gives distance equals to (\d+) km$/) do |dist_km|
-  Geo::Itudes.distance(@i2, @i1).to_i.should == dist_km.to_i
+  expect(Geo::Itudes.distance(@i2, @i1).to_i).to eq(dist_km.to_i)
 end
 
 Then(/^the rounded value should equal to \((.+)\)$/) do |rounded|
-  @itudes.round.should == Geo::Itudes.new(rounded)
-  @itudes.round.should == rounded
+  expect(@itudes.round).to eq(Geo::Itudes.new(rounded))
+  expect(@itudes.round).to eq(rounded)
 end
 
 When(/^the distance is calculated by implicit “\- "(.*?)"”$/) do |other|
@@ -82,5 +82,5 @@ When(/^the distance is calculated by implicit “\- "(.*?)"”$/) do |other|
 end
 
 Then(/^the calculated distance equals to (\d+) km$/) do |dist|
-  dist.to_i.should == @calc_dist.to_i
+  expect(dist.to_i).to eq(@calc_dist.to_i)
 end
